@@ -1,5 +1,11 @@
+import LandingPage from "./pages/LandingPage";
+
 const App = () => {
-  return <>Hello World</>;
+  return (
+    <>
+      <LandingPage />
+    </>
+  );
 };
 
 export default App;
