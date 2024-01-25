@@ -1,14 +1,14 @@
 const CreateOrUpdateModal = ({ setIsModalOpen }) => {
   return (
-    <>
-      <form className="mx-auto my-10 w-full max-w-[740px] rounded-xl border border-[#FEFBFB]/[36%] bg-[#191D26] p-9 max-md:px-4 lg:my-20 lg:p-11">
+    <div className="bg-[#2d323fa9] w-full h-full flex justify-center items-center fixed top-0 left-0 z-50 px-5">
+      <form className="my-10 w-full max-w-[740px] max-h-[645px] h-full rounded-xl border border-[#FEFBFB]/[36%] bg-[#191D26] p-9 max-md:px-4 lg:my-20">
         <h2 className="mb-9 text-center text-2xl font-bold text-white lg:mb-11 lg:text-[28px]">
           Add New Task
         </h2>
         {/* inputs */}
-        <div className="space-y-9 text-white lg:space-y-10">
+        <div className="space-y-3 lg:space-y-7 text-white">
           {/* title */}
-          <div className="space-y-2 lg:space-y-3">
+          <div className="space-y-1">
             <label htmlFor="title">Title</label>
             <input
               className="block w-full rounded-md bg-[#2D323F] px-3 py-2.5"
@@ -19,7 +19,7 @@ const CreateOrUpdateModal = ({ setIsModalOpen }) => {
             />
           </div>
           {/* description */}
-          <div className="space-y-2 lg:space-y-3">
+          <div className="space-y-1">
             <label htmlFor="description">Description</label>
             <textarea
               className="block min-h-[120px] w-full rounded-md bg-[#2D323F] px-3 py-2.5 lg:min-h-[180px]"
@@ -33,7 +33,7 @@ const CreateOrUpdateModal = ({ setIsModalOpen }) => {
           {/* input group */}
           <div className="grid-cols-2 gap-x-4 max-md:space-y-9 md:grid lg:gap-x-10 xl:gap-x-20">
             {/* tags */}
-            <div className="space-y-2 lg:space-y-3">
+            <div className="space-y-1">
               <label htmlFor="tags">Tags</label>
               <input
                 className="block w-full rounded-md bg-[#2D323F] px-3 py-2.5"
@@ -44,7 +44,7 @@ const CreateOrUpdateModal = ({ setIsModalOpen }) => {
               />
             </div>
             {/* priority */}
-            <div className="space-y-2 lg:space-y-3">
+            <div className="space-y-1">
               <label htmlFor="priority">Priority</label>
               <select
                 className="block w-full cursor-pointer rounded-md bg-[#2D323F] px-3 py-2.5"
@@ -61,7 +61,7 @@ const CreateOrUpdateModal = ({ setIsModalOpen }) => {
           </div>
         </div>
         {/* inputs ends */}
-        <div className="mt-16 flex justify-between lg:mt-20">
+        <div className="mt-8 flex justify-between">
           <button
             onClick={() => setIsModalOpen(false)}
             type="submit"
@@ -77,7 +77,7 @@ const CreateOrUpdateModal = ({ setIsModalOpen }) => {
           </button>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 
