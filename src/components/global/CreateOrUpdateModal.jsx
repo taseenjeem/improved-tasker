@@ -1,6 +1,6 @@
 const CreateOrUpdateModal = ({ setIsModalOpen }) => {
   return (
-    <div className="bg-[#2d323fa9] w-full h-full flex justify-center items-center fixed top-0 left-0 z-50 px-5">
+    <div className="bg-[#2d323fd5] w-full h-full flex justify-center items-center fixed top-0 left-0 z-50 px-5">
       <form className="my-10 w-full max-w-[740px] max-h-[645px] h-full rounded-xl border border-[#FEFBFB]/[36%] bg-[#191D26] p-9 max-md:px-4 lg:my-20">
         <h2 className="mb-9 text-center text-2xl font-bold text-white lg:mb-11 lg:text-[28px]">
           Add New Task
