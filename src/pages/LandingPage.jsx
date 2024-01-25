@@ -1,5 +1,11 @@
+import Hero from "../components/page-components/landing-page/Hero";
+
 const LandingPage = () => {
-  return <>Hello World</>;
+  return (
+    <main className="bg-[#191D26] font-[Inter] text-white">
+      <Hero />
+    </main>
+  );
 };
 
 export default LandingPage;
