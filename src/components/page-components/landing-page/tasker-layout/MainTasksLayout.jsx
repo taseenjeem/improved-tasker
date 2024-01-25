@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import TableRow from "./TableRow";
 import TaskerHeader from "./TaskerHeader";
 import CreateOrUpdateModal from "../../../global/CreateOrUpdateModal";
+import { TaskDataContext } from "../../../../context/all-context";
 
 const MainTasksLayout = () => {
   const [isModalOpen, setIsModalOpen] = useState({ isOpen: false, mode: "" });
+  const { taskData, setTaskData } = useContext(TaskDataContext);
 
   return (
     <>
@@ -47,7 +49,13 @@ const MainTasksLayout = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <TableRow setIsModalOpen={setIsModalOpen} />
+                  {taskData.map((task) => (
+                    <TableRow
+                      key={task.id}
+                      taskDetails={task}
+                      setIsModalOpen={setIsModalOpen}
+                    />
+                  ))}
                 </tbody>
               </table>
             </div>

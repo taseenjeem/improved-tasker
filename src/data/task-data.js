@@ -1,4 +1,4 @@
-export const taskData = [
+export const initialTaskData = [
   {
     id: crypto.randomUUID(),
     title: "Learn React js",
