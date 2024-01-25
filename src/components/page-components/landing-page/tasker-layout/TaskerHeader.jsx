@@ -39,7 +39,7 @@ const TaskerHeader = ({ setIsModalOpen }) => {
             </div>
           </form>
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsModalOpen({ isOpen: true, mode: "addTask" })}
             className="rounded-md bg-blue-500 px-3.5 py-2.5 text-sm font-semibold"
           >
             Add Task

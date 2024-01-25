@@ -4,11 +4,16 @@ import TaskerHeader from "./TaskerHeader";
 import CreateOrUpdateModal from "../../../global/CreateOrUpdateModal";
 
 const MainTasksLayout = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState({ isOpen: false, mode: "" });
 
   return (
     <>
-      {isModalOpen && <CreateOrUpdateModal setIsModalOpen={setIsModalOpen} />}
+      {isModalOpen.isOpen && (
+        <CreateOrUpdateModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
+      )}
       <section className="mb-20" id="tasks">
         <div className="container">
           {/* Search Box Ends */}
@@ -42,7 +47,7 @@ const MainTasksLayout = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <TableRow />
+                  <TableRow setIsModalOpen={setIsModalOpen} />
                 </tbody>
               </table>
             </div>
