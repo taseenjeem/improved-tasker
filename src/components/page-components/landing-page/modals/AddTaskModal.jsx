@@ -31,7 +31,7 @@ const AddTaskModal = ({ setAddTaskModal, taskData, setTaskData }) => {
     setAddTaskModal(false);
 
     // Show success toast
-    toast.success("New task added successfully!");
+    toast.success("New task added successfully!", { position: "top-center" });
   };
 
   return (
