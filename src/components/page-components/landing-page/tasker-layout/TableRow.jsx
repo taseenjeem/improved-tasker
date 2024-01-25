@@ -1,4 +1,13 @@
 const TableRow = ({ setEditTaskModal, taskDetails }) => {
+  const getRandomColor = () => {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
   return (
     <>
       <tr className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2">
@@ -27,7 +36,10 @@ const TableRow = ({ setEditTaskModal, taskDetails }) => {
           <ul className="flex justify-center gap-1.5 flex-wrap">
             {taskDetails.tags.map((tag) => (
               <li key={tag}>
-                <span className="inline-block h-5 whitespace-nowrap rounded-[45px] bg-[#00D991A1] px-2.5 text-sm capitalize text-[#F4F5F6]">
+                <span
+                  className={`inline-block h-5 whitespace-nowrap rounded-[45px] px-2.5 text-sm capitalize text-[#F4F5F6]`}
+                  style={{ backgroundColor: getRandomColor() }}
+                >
                   {tag}
                 </span>
               </li>
