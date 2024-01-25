@@ -1,26 +1,34 @@
 import { useContext, useState } from "react";
 import TableRow from "./TableRow";
 import TaskerHeader from "./TaskerHeader";
-import CreateOrUpdateModal from "../../../global/CreateOrUpdateModal";
 import { TaskDataContext } from "../../../../context/all-context";
+import AddTaskModal from "../modals/AddTaskModal";
+import UpdateTaskModal from "../modals/UpdateTaskModal";
 
 const MainTasksLayout = () => {
-  const [isModalOpen, setIsModalOpen] = useState({ isOpen: false, mode: "" });
+  const [addTaskModal, setAddTaskModal] = useState(false);
+  const [editTaskModal, setEditTaskModal] = useState(false);
   const { taskData, setTaskData } = useContext(TaskDataContext);
 
   return (
     <>
-      {isModalOpen.isOpen && (
-        <CreateOrUpdateModal
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
+      {addTaskModal && (
+        <AddTaskModal
+          addTaskModal={addTaskModal}
+          setAddTaskModal={setAddTaskModal}
+        />
+      )}
+      {editTaskModal && (
+        <UpdateTaskModal
+          editTaskModal={editTaskModal}
+          setEditTaskModal={setEditTaskModal}
         />
       )}
       <section className="mb-20" id="tasks">
         <div className="container">
           {/* Search Box Ends */}
           <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
-            <TaskerHeader setIsModalOpen={setIsModalOpen} />
+            <TaskerHeader setAddTaskModal={setAddTaskModal} />
             <div className="overflow-auto">
               <table className="table-fixed overflow-auto xl:w-full">
                 <thead>
@@ -53,7 +61,7 @@ const MainTasksLayout = () => {
                     <TableRow
                       key={task.id}
                       taskDetails={task}
-                      setIsModalOpen={setIsModalOpen}
+                      setEditTaskModal={setEditTaskModal}
                     />
                   ))}
                 </tbody>

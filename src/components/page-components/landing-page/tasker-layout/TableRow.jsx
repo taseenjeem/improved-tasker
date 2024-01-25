@@ -1,4 +1,4 @@
-const TableRow = ({ setIsModalOpen, taskDetails }) => {
+const TableRow = ({ setEditTaskModal, taskDetails }) => {
   return (
     <>
       <tr className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2">
@@ -39,7 +39,7 @@ const TableRow = ({ setIsModalOpen, taskDetails }) => {
           <div className="flex items-center justify-center space-x-3">
             <button className="text-red-500">Delete</button>
             <button
-              onClick={() => setIsModalOpen({ isOpen: true, mode: "editTask" })}
+              onClick={() => setEditTaskModal(true)}
               className="text-blue-500"
             >
               Edit
