@@ -2,14 +2,13 @@ const CreateOrUpdateModal = ({ isModalOpen, setIsModalOpen }) => {
   return (
     <div className="bg-[#2d323fd5] w-full h-full flex justify-center items-center fixed top-0 left-0 z-50 px-5">
       <form className="my-10 w-full max-w-[740px] max-h-[645px] h-full rounded-xl border border-[#FEFBFB]/[36%] bg-[#191D26] p-9 max-md:px-4 lg:my-20">
-        {isModalOpen.mode === "addTask" && (
+        {isModalOpen.mode === "addTask" ? (
           <h2 className="mb-9 text-center text-2xl font-bold text-white lg:mb-11 lg:text-[28px]">
             Add New Task
           </h2>
-        )}
-        {isModalOpen.mode === "editTask" && (
+        ) : (
           <h2 className="mb-9 text-center text-2xl font-bold text-white lg:mb-11 lg:text-[28px]">
-            Edit Task
+            Edit This Task
           </h2>
         )}
         {/* inputs */}
@@ -76,12 +75,21 @@ const CreateOrUpdateModal = ({ isModalOpen, setIsModalOpen }) => {
           >
             Cancel
           </button>
-          <button
-            type="submit"
-            className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
-          >
-            Create new Task
-          </button>
+          {isModalOpen.mode === "addTask" ? (
+            <button
+              type="submit"
+              className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
+            >
+              Create new Task
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
+            >
+              Edit This Task
+            </button>
+          )}
         </div>
       </form>
     </div>
