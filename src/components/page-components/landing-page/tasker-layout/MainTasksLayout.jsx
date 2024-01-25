@@ -16,6 +16,7 @@ const MainTasksLayout = () => {
         <AddTaskModal
           addTaskModal={addTaskModal}
           setAddTaskModal={setAddTaskModal}
+          taskData={taskData}
           setTaskData={setTaskData}
         />
       )}
