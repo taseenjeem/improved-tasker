@@ -1,14 +1,19 @@
+import { useState } from "react";
 import TableRow from "./TableRow";
 import TaskerHeader from "./TaskerHeader";
+import CreateOrUpdateModal from "../../../global/CreateOrUpdateModal";
 
 const MainTasksLayout = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <>
+      {isModalOpen && <CreateOrUpdateModal setIsModalOpen={setIsModalOpen} />}
       <section className="mb-20" id="tasks">
         <div className="container">
           {/* Search Box Ends */}
           <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
-            <TaskerHeader />
+            <TaskerHeader setIsModalOpen={setIsModalOpen} />
             <div className="overflow-auto">
               <table className="table-fixed overflow-auto xl:w-full">
                 <thead>

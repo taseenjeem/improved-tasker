@@ -1,4 +1,4 @@
-const TaskerHeader = () => {
+const TaskerHeader = ({ setIsModalOpen }) => {
   return (
     <>
       <div className="mb-14 items-center justify-between sm:flex">
@@ -38,7 +38,10 @@ const TaskerHeader = () => {
               </div>
             </div>
           </form>
-          <button className="rounded-md bg-blue-500 px-3.5 py-2.5 text-sm font-semibold">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="rounded-md bg-blue-500 px-3.5 py-2.5 text-sm font-semibold"
+          >
             Add Task
           </button>
           <button className="rounded-md bg-red-500 px-3.5 py-2.5 text-sm font-semibold">
