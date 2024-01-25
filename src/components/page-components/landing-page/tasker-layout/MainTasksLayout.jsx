@@ -16,12 +16,14 @@ const MainTasksLayout = () => {
         <AddTaskModal
           addTaskModal={addTaskModal}
           setAddTaskModal={setAddTaskModal}
+          setTaskData={setTaskData}
         />
       )}
       {editTaskModal && (
         <UpdateTaskModal
           editTaskModal={editTaskModal}
           setEditTaskModal={setEditTaskModal}
+          setTaskData={setTaskData}
         />
       )}
       <section className="mb-20" id="tasks">
