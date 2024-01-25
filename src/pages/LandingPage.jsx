@@ -1,4 +1,4 @@
-import Hero from "../components/page-components/landing-page/Hero";
+import Hero from "../components/page-components/landing-page/banner/Hero";
 
 const LandingPage = () => {
   return (
