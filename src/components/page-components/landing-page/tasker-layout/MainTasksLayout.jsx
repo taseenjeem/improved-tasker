@@ -119,7 +119,7 @@ const MainTasksLayout = () => {
             {/* Conditional rendering based on taskData length */}
             {filteredTasks.length <= 0 ? (
               // Displayed when no tasks are found
-              <p className="text-center text-3xl">No tasks found!</p>
+              <p className="text-center text-3xl">Task List is empty!</p>
             ) : (
               // Displayed when there are tasks
               <div className="overflow-auto">
