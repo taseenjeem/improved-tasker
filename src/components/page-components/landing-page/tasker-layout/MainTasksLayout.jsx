@@ -9,6 +9,14 @@ const MainTasksLayout = () => {
   const { taskData, setTaskData } = useContext(TaskDataContext);
   const [addTaskModal, setAddTaskModal] = useState(false);
   const [editTaskModal, setEditTaskModal] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
+
+  const handleEditTask = (task) => {
+    setSelectedTask(task);
+    setEditTaskModal(true);
+  };
+
+  console.log(taskData);
 
   return (
     <>
@@ -21,9 +29,10 @@ const MainTasksLayout = () => {
       )}
       {editTaskModal && (
         <UpdateTaskModal
-          editTaskModal={editTaskModal}
           setEditTaskModal={setEditTaskModal}
+          taskData={taskData}
           setTaskData={setTaskData}
+          selectedTask={selectedTask}
         />
       )}
       <section className="mb-20" id="tasks">
@@ -63,7 +72,7 @@ const MainTasksLayout = () => {
                     <TableRow
                       key={task.id}
                       taskDetails={task}
-                      setEditTaskModal={setEditTaskModal}
+                      onEditTask={handleEditTask}
                     />
                   ))}
                 </tbody>

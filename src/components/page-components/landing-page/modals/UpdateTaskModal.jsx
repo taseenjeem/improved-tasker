@@ -1,8 +1,69 @@
-const UpdateTaskModal = ({ setEditTaskModal }) => {
+import { useState } from "react";
+import { toast } from "react-toastify";
+
+const UpdateTaskModal = ({
+  setEditTaskModal,
+  selectedTask,
+  taskData,
+  setTaskData,
+}) => {
+  const [editedTask, setEditedTask] = useState(selectedTask);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditedTask((prevTask) => ({ ...prevTask, [name]: value }));
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+
+    // Extract values from form inputs
+    const title = e.target.title.value;
+    const task_description = e.target.task_description.value;
+    const tags = e.target.tags.value;
+    const priority = e.target.priority.value;
+
+    // Create a new task object
+    const editedNewTask = {
+      id: crypto.randomUUID(),
+      title,
+      task_description,
+      tags: tags.split(","),
+      priority,
+      isFavorite: editedTask.isFavorite,
+    };
+
+    // Find the task in taskData based on its id
+    const foundTask = taskData.find((task) => task.id === editedTask.id);
+
+    // Check if the task is found
+    if (foundTask) {
+      // Create a new array with the updated task
+      const updatedTaskData = taskData.map((task) =>
+        task.id === editedTask.id ? editedNewTask : task
+      );
+
+      // Update the taskData state with the new array
+      setTaskData(updatedTaskData);
+
+      // Display a success toast
+      toast.success("Task updated successfully");
+    } else {
+      // Display an error toast if the task is not found
+      toast.error("Task not found");
+    }
+
+    // Close the modal
+    setEditTaskModal(false);
+  };
+
   return (
     <>
       <div className="bg-[#2d323fd5] w-full h-full flex justify-center items-center fixed top-0 left-0 z-50 px-5">
-        <form className="my-10 w-full max-w-[740px] max-h-[645px] h-full rounded-xl border border-[#FEFBFB]/[36%] bg-[#191D26] p-9 max-md:px-4 lg:my-20">
+        <form
+          onSubmit={handleOnSubmit}
+          className="my-10 w-full max-w-[740px] max-h-[645px] h-full rounded-xl border border-[#FEFBFB]/[36%] bg-[#191D26] p-9 max-md:px-4 lg:my-20"
+        >
           <h2 className="mb-9 text-center text-2xl font-bold text-white lg:mb-11 lg:text-[28px]">
             Edit This Task
           </h2>
@@ -16,7 +77,8 @@ const UpdateTaskModal = ({ setEditTaskModal }) => {
                 type="text"
                 name="title"
                 id="title"
-                required=""
+                value={editedTask.title}
+                onChange={handleInputChange}
               />
             </div>
             {/* description */}
@@ -25,10 +87,10 @@ const UpdateTaskModal = ({ setEditTaskModal }) => {
               <textarea
                 className="block min-h-[120px] w-full rounded-md bg-[#2D323F] px-3 py-2.5 lg:min-h-[180px]"
                 type="text"
-                name="description"
-                id="description"
-                required=""
-                defaultValue={""}
+                name="task_description"
+                id="task_description"
+                value={editedTask.task_description}
+                onChange={handleInputChange}
               />
             </div>
             {/* input group */}
@@ -41,7 +103,8 @@ const UpdateTaskModal = ({ setEditTaskModal }) => {
                   type="text"
                   name="tags"
                   id="tags"
-                  required=""
+                  value={editedTask.tags}
+                  onChange={handleInputChange}
                 />
               </div>
               {/* priority */}
@@ -51,7 +114,8 @@ const UpdateTaskModal = ({ setEditTaskModal }) => {
                   className="block w-full cursor-pointer rounded-md bg-[#2D323F] px-3 py-2.5"
                   name="priority"
                   id="priority"
-                  required=""
+                  value={editedTask.priority}
+                  onChange={handleInputChange}
                 >
                   <option value="">Select Priority</option>
                   <option value="low">Low</option>

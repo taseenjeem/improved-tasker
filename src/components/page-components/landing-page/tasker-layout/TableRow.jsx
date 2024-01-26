@@ -1,4 +1,4 @@
-const TableRow = ({ setEditTaskModal, taskDetails }) => {
+const TableRow = ({ taskDetails, onEditTask }) => {
   const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
     let color = "#";
@@ -51,7 +51,7 @@ const TableRow = ({ setEditTaskModal, taskDetails }) => {
           <div className="flex items-center justify-center space-x-3">
             <button className="text-red-500">Delete</button>
             <button
-              onClick={() => setEditTaskModal(true)}
+              onClick={() => onEditTask(taskDetails)}
               className="text-blue-500"
             >
               Edit
