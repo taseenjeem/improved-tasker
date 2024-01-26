@@ -4,6 +4,7 @@ import TaskerHeader from "./TaskerHeader";
 import { TaskDataContext } from "../../../../context/all-context";
 import AddTaskModal from "../modals/AddTaskModal";
 import UpdateTaskModal from "../modals/UpdateTaskModal";
+import { toast } from "react-toastify";
 
 const MainTasksLayout = () => {
   const { taskData, setTaskData } = useContext(TaskDataContext);
@@ -16,7 +17,21 @@ const MainTasksLayout = () => {
     setEditTaskModal(true);
   };
 
-  console.log(taskData);
+  const handleDeleteTask = (task) => {
+    // Display a confirmation dialog
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this task?"
+    );
+
+    // If the user confirms, proceed with deletion
+    if (confirmDelete) {
+      const remainingTasks = taskData.filter((item) => item.id !== task.id);
+      setTaskData(remainingTasks);
+
+      // Display a success toast or handle accordingly
+      toast.success("Task deleted successfully", { position: "top-center" });
+    }
+  };
 
   return (
     <>
@@ -73,6 +88,7 @@ const MainTasksLayout = () => {
                       key={task.id}
                       taskDetails={task}
                       onEditTask={handleEditTask}
+                      onDeleteTask={handleDeleteTask}
                     />
                   ))}
                 </tbody>

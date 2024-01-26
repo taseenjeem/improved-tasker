@@ -1,4 +1,4 @@
-const TableRow = ({ taskDetails, onEditTask }) => {
+const TableRow = ({ taskDetails, onEditTask, onDeleteTask }) => {
   const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
     let color = "#";
@@ -49,7 +49,12 @@ const TableRow = ({ taskDetails, onEditTask }) => {
         <td className="text-center">{taskDetails.priority}</td>
         <td>
           <div className="flex items-center justify-center space-x-3">
-            <button className="text-red-500">Delete</button>
+            <button
+              onClick={() => onDeleteTask(taskDetails)}
+              className="text-red-500"
+            >
+              Delete
+            </button>
             <button
               onClick={() => onEditTask(taskDetails)}
               className="text-blue-500"
