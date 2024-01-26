@@ -19,6 +19,7 @@ const MainTasksLayout = () => {
   // State to store the selected task for editing
   const [selectedTask, setSelectedTask] = useState(null);
 
+  // State for search
   const [searchQuery, setSearchQuery] = useState("");
 
   // Function to handle editing a task
@@ -81,6 +82,7 @@ const MainTasksLayout = () => {
     }
   };
 
+  // Filtered tasks after search by title
   const filteredTasks = taskData.filter((task) =>
     task.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
