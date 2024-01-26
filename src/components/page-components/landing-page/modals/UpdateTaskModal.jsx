@@ -23,38 +23,46 @@ const UpdateTaskModal = ({
     const tags = e.target.tags.value;
     const priority = e.target.priority.value;
 
-    // Create a new task object
-    const editedNewTask = {
-      id: crypto.randomUUID(),
-      title,
-      task_description,
-      tags: tags.split(","),
-      priority,
-      isFavorite: editedTask.isFavorite,
-    };
-
-    // Find the task in taskData based on its id
-    const foundTask = taskData.find((task) => task.id === editedTask.id);
-
-    // Check if the task is found
-    if (foundTask) {
-      // Create a new array with the updated task
-      const updatedTaskData = taskData.map((task) =>
-        task.id === editedTask.id ? editedNewTask : task
-      );
-
-      // Update the taskData state with the new array
-      setTaskData(updatedTaskData);
-
-      // Display a success toast
-      toast.success("Task updated successfully", { position: "top-center" });
+    if (
+      title.length <= 0 ||
+      task_description.length <= 0 ||
+      tags.length <= 0 ||
+      priority.length <= 0
+    ) {
+      toast.error("Ops! You can't left any field empty.", {
+        position: "top-center",
+      });
     } else {
-      // Display an error toast if the task is not found
-      toast.error("Task not found", { position: "top-center" });
-    }
+      // Create a new task object
+      const editedNewTask = {
+        id: crypto.randomUUID(),
+        title,
+        task_description,
+        tags: tags.split(","),
+        priority,
+        isFavorite: editedTask.isFavorite,
+      };
 
-    // Close the modal
-    setEditTaskModal(false);
+      // Find the task in taskData based on its id
+      const foundTask = taskData.find((task) => task.id === editedTask.id);
+
+      // Check if the task is found
+      if (foundTask) {
+        // Create a new array with the updated task
+        const updatedTaskData = taskData.map((task) =>
+          task.id === editedTask.id ? editedNewTask : task
+        );
+
+        // Update the taskData state with the new array
+        setTaskData(updatedTaskData);
+
+        // Display a success toast
+        toast.success("Task updated successfully", { position: "top-center" });
+      }
+
+      // Close the modal
+      setEditTaskModal(false);
+    }
   };
 
   return (
