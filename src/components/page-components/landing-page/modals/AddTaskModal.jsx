@@ -8,14 +8,14 @@ const AddTaskModal = ({ setAddTaskModal, taskData, setTaskData }) => {
 
     // Extract values from form inputs
     const title = e.target.title.value;
-    const taskDescription = e.target.description.value;
+    const task_description = e.target.task_description.value;
     const tags = e.target.tags.value;
     const priority = e.target.priority.value;
 
     // Check if any of the required fields are empty
     if (
       title.length <= 0 ||
-      taskDescription.length <= 0 ||
+      task_description.length <= 0 ||
       tags.length <= 0 ||
       priority.length <= 0
     ) {
@@ -26,7 +26,7 @@ const AddTaskModal = ({ setAddTaskModal, taskData, setTaskData }) => {
       const newTask = {
         id: crypto.randomUUID(),
         title,
-        taskDescription,
+        task_description,
         tags: tags.split(","), // Split tags into an array
         priority,
         isFavorite: false,
@@ -70,12 +70,12 @@ const AddTaskModal = ({ setAddTaskModal, taskData, setTaskData }) => {
             </div>
             {/* description */}
             <div className="space-y-1">
-              <label htmlFor="description">Description</label>
+              <label htmlFor="task_description">Description</label>
               <textarea
                 className="block min-h-[120px] w-full rounded-md bg-[#2D323F] px-3 py-2.5 lg:min-h-[180px]"
                 type="text"
-                name="description"
-                id="description"
+                name="task_description"
+                id="task_description"
                 defaultValue={""}
               />
             </div>
