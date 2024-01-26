@@ -3,35 +3,47 @@ import { toast } from "react-toastify";
 const AddTaskModal = ({ setAddTaskModal, taskData, setTaskData }) => {
   // Handle task add form submission
   const handleOnSubmit = (e) => {
+    // Prevent the default form submission behavior
     e.preventDefault();
 
     // Extract values from form inputs
     const title = e.target.title.value;
-    const task_description = e.target.description.value;
+    const taskDescription = e.target.description.value;
     const tags = e.target.tags.value;
     const priority = e.target.priority.value;
 
-    // Create a new task object
-    const newTask = {
-      id: crypto.randomUUID(),
-      title,
-      task_description,
-      tags: tags.split(","),
-      priority,
-      isFavorite: false,
-    };
+    // Check if any of the required fields are empty
+    if (
+      title.length <= 0 ||
+      taskDescription.length <= 0 ||
+      tags.length <= 0 ||
+      priority.length <= 0
+    ) {
+      // Display a warning toast if any required field is empty
+      toast.warning("Please fill up all inputs", { position: "top-center" });
+    } else {
+      // Create a new task object
+      const newTask = {
+        id: crypto.randomUUID(),
+        title,
+        taskDescription,
+        tags: tags.split(","), // Split tags into an array
+        priority,
+        isFavorite: false,
+      };
 
-    // Update taskData state with the new task
-    setTaskData([...taskData, newTask]);
+      // Update taskData state with the new task
+      setTaskData([...taskData, newTask]);
 
-    // Reset the form inputs
-    e.target.reset();
+      // Reset the form inputs
+      e.target.reset();
 
-    // Close the modal
-    setAddTaskModal(false);
+      // Close the modal
+      setAddTaskModal(false);
 
-    // Show success toast
-    toast.success("New task added successfully!", { position: "top-center" });
+      // Display a success toast
+      toast.success("New task added successfully!", { position: "top-center" });
+    }
   };
 
   return (
@@ -54,7 +66,6 @@ const AddTaskModal = ({ setAddTaskModal, taskData, setTaskData }) => {
                 type="text"
                 name="title"
                 id="title"
-                required
               />
             </div>
             {/* description */}
@@ -65,7 +76,6 @@ const AddTaskModal = ({ setAddTaskModal, taskData, setTaskData }) => {
                 type="text"
                 name="description"
                 id="description"
-                required
                 defaultValue={""}
               />
             </div>
@@ -79,7 +89,6 @@ const AddTaskModal = ({ setAddTaskModal, taskData, setTaskData }) => {
                   type="text"
                   name="tags"
                   id="tags"
-                  required
                 />
               </div>
               {/* priority */}
@@ -89,7 +98,6 @@ const AddTaskModal = ({ setAddTaskModal, taskData, setTaskData }) => {
                   className="block w-full cursor-pointer rounded-md bg-[#2D323F] px-3 py-2.5"
                   name="priority"
                   id="priority"
-                  required
                 >
                   <option value="">Select Priority</option>
                   <option value="low">Low</option>
