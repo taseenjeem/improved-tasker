@@ -19,6 +19,8 @@ const MainTasksLayout = () => {
   // State to store the selected task for editing
   const [selectedTask, setSelectedTask] = useState(null);
 
+  const [searchQuery, setSearchQuery] = useState("");
+
   // Function to handle editing a task
   const handleEditTask = (task) => {
     setSelectedTask(task);
@@ -79,6 +81,10 @@ const MainTasksLayout = () => {
     }
   };
 
+  const filteredTasks = taskData.filter((task) =>
+    task.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <>
       {addTaskModal && (
@@ -106,9 +112,10 @@ const MainTasksLayout = () => {
             <TaskerHeader
               setAddTaskModal={setAddTaskModal}
               onDeleteAllTask={handleDeleteAllTasks}
+              onSearch={(terms) => setSearchQuery(terms)}
             />
             {/* Conditional rendering based on taskData length */}
-            {taskData.length <= 0 ? (
+            {filteredTasks.length <= 0 ? (
               // Displayed when no tasks are found
               <p className="text-center text-3xl">No tasks found!</p>
             ) : (
@@ -144,7 +151,7 @@ const MainTasksLayout = () => {
                   </thead>
                   <tbody>
                     {/* Render each task as a TableRow component */}
-                    {taskData.map((task) => (
+                    {filteredTasks.map((task) => (
                       <TableRow
                         key={task.id}
                         taskDetails={task}

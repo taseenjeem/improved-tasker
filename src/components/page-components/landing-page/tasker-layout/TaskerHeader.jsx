@@ -1,4 +1,4 @@
-const TaskerHeader = ({ setAddTaskModal, onDeleteAllTask }) => {
+const TaskerHeader = ({ setAddTaskModal, onDeleteAllTask, onSearch }) => {
   return (
     <>
       <div className="mb-14 items-center justify-between sm:flex">
@@ -13,6 +13,7 @@ const TaskerHeader = ({ setAddTaskModal, onDeleteAllTask }) => {
                   className="z-20 block w-full bg-gray-800 px-4 py-2 pr-10 focus:outline-none"
                   placeholder="Search Task"
                   required=""
+                  onChange={(e) => onSearch(e.target.value)}
                 />
                 <button
                   type="submit"
