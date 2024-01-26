@@ -7,19 +7,30 @@ import UpdateTaskModal from "../modals/UpdateTaskModal";
 import { toast } from "react-toastify";
 
 const MainTasksLayout = () => {
+  // Context for accessing taskData and setTaskData
   const { taskData, setTaskData } = useContext(TaskDataContext);
+
+  // State for controlling the visibility of the Add Task modal
   const [addTaskModal, setAddTaskModal] = useState(false);
+
+  // State for controlling the visibility of the Edit Task modal
   const [editTaskModal, setEditTaskModal] = useState(false);
+
+  // State to store the selected task for editing
   const [selectedTask, setSelectedTask] = useState(null);
 
+  // Function to handle editing a task
   const handleEditTask = (task) => {
     setSelectedTask(task);
     setEditTaskModal(true);
   };
 
+  // Function to toggle the isFavorite property of a task
   const handleSetFavorite = (task) => {
+    // Find the task in taskData based on its id
     const updatedTaskData = taskData.map((item) => {
       if (item.id === task.id) {
+        // Toggle the isFavorite property
         return {
           ...item,
           isFavorite: !item.isFavorite,
@@ -29,9 +40,11 @@ const MainTasksLayout = () => {
       }
     });
 
+    // Update the taskData state with the new array
     setTaskData(updatedTaskData);
   };
 
+  // Function to handle deleting a task with confirmation
   const handleDeleteTask = (task) => {
     // Display a confirmation dialog
     const confirmDelete = window.confirm(
@@ -48,6 +61,7 @@ const MainTasksLayout = () => {
     }
   };
 
+  // Function to handle deleting all tasks with confirmation
   const handleDeleteAllTasks = () => {
     // Display a confirmation dialog
     const confirmDeleteAll = window.confirm(
@@ -68,6 +82,7 @@ const MainTasksLayout = () => {
   return (
     <>
       {addTaskModal && (
+        // Add Task Modal Component
         <AddTaskModal
           setAddTaskModal={setAddTaskModal}
           taskData={taskData}
@@ -75,6 +90,7 @@ const MainTasksLayout = () => {
         />
       )}
       {editTaskModal && (
+        // Edit Task Modal Component
         <UpdateTaskModal
           setEditTaskModal={setEditTaskModal}
           taskData={taskData}
@@ -86,17 +102,23 @@ const MainTasksLayout = () => {
         <div className="container">
           {/* Search Box Ends */}
           <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
+            {/* Tasker Header Component */}
             <TaskerHeader
               setAddTaskModal={setAddTaskModal}
               onDeleteAllTask={handleDeleteAllTasks}
             />
+            {/* Conditional rendering based on taskData length */}
             {taskData.length <= 0 ? (
+              // Displayed when no tasks are found
               <p className="text-center text-3xl">No tasks found!</p>
             ) : (
+              // Displayed when there are tasks
               <div className="overflow-auto">
+                {/* Tasks Table */}
                 <table className="table-fixed overflow-auto xl:w-full">
                   <thead>
                     <tr>
+                      {/* Table Header Columns */}
                       <th className="p-4 pb-8 text-sm font-semibold capitalize w-[48px]" />
                       <th className="p-4 pb-8 text-sm font-semibold capitalize w-[300px]">
                         {" "}
@@ -121,6 +143,7 @@ const MainTasksLayout = () => {
                     </tr>
                   </thead>
                   <tbody>
+                    {/* Render each task as a TableRow component */}
                     {taskData.map((task) => (
                       <TableRow
                         key={task.id}
