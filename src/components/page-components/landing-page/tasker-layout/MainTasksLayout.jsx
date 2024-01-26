@@ -1,133 +1,92 @@
 import { useContext, useState } from "react";
 import TableRow from "./TableRow";
 import TaskerHeader from "./TaskerHeader";
-import { TaskDataContext } from "../../../../context/all-context";
+import { TaskReducerContext } from "../../../../context/all-context";
 import AddTaskModal from "../modals/AddTaskModal";
 import UpdateTaskModal from "../modals/UpdateTaskModal";
 import { toast } from "react-toastify";
 
 const MainTasksLayout = () => {
-  // Context for accessing taskData and setTaskData
-  const { taskData, setTaskData } = useContext(TaskDataContext);
-
-  // State for controlling the visibility of the Add Task modal
+  const { state, dispatch } = useContext(TaskReducerContext);
   const [addTaskModal, setAddTaskModal] = useState(false);
-
-  // State for controlling the visibility of the Edit Task modal
   const [editTaskModal, setEditTaskModal] = useState(false);
-
-  // State to store the selected task for editing
   const [selectedTask, setSelectedTask] = useState(null);
-
-  // State for search
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Function to handle editing a task
   const handleEditTask = (task) => {
     setSelectedTask(task);
     setEditTaskModal(true);
   };
 
-  // Function to toggle the isFavorite property of a task
   const handleSetFavorite = (task) => {
-    // Find the task in taskData based on its id
-    const updatedTaskData = taskData.map((item) => {
-      if (item.id === task.id) {
-        // Toggle the isFavorite property
-        return {
-          ...item,
-          isFavorite: !item.isFavorite,
-        };
-      } else {
-        return item;
-      }
+    dispatch({
+      type: "SET_FAVORITE",
+      payload: { id: task.id },
     });
-
-    // Update the taskData state with the new array
-    setTaskData(updatedTaskData);
   };
 
-  // Function to handle deleting a task with confirmation
   const handleDeleteTask = (task) => {
-    // Display a confirmation dialog
-    const confirmDelete = window.confirm(
+    const isConfirmed = window.confirm(
       "Are you sure you want to delete this task?"
     );
 
-    // If the user confirms, proceed with deletion
-    if (confirmDelete) {
-      const remainingTasks = taskData.filter((item) => item.id !== task.id);
-      setTaskData(remainingTasks);
+    if (isConfirmed) {
+      dispatch({
+        type: "DELETE_TASK",
+        payload: { id: task.id },
+      });
 
-      // Display a success toast or handle accordingly
       toast.success("Task deleted successfully", { position: "top-center" });
     }
   };
 
-  // Function to handle deleting all tasks with confirmation
   const handleDeleteAllTasks = () => {
-    // Display a confirmation dialog
-    const confirmDeleteAll = window.confirm(
+    const isConfirmed = window.confirm(
       "Are you sure you want to delete all tasks?"
     );
 
-    // If the user confirms, proceed with deletion
-    if (confirmDeleteAll) {
-      setTaskData([]);
+    if (isConfirmed) {
+      dispatch({
+        type: "DELETE_ALL_TASKS",
+      });
 
-      // Display a success toast or handle accordingly
       toast.success("All tasks deleted successfully", {
         position: "top-center",
       });
     }
   };
 
-  // Filtered tasks after search by title
-  const filteredTasks = taskData.filter((task) =>
+  const filteredTasks = state.taskData.filter((task) =>
     task.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     <>
       {addTaskModal && (
-        // Add Task Modal Component
-        <AddTaskModal
-          setAddTaskModal={setAddTaskModal}
-          taskData={taskData}
-          setTaskData={setTaskData}
-        />
+        <AddTaskModal setAddTaskModal={setAddTaskModal} dispatch={dispatch} />
       )}
       {editTaskModal && (
-        // Edit Task Modal Component
         <UpdateTaskModal
           setEditTaskModal={setEditTaskModal}
-          taskData={taskData}
-          setTaskData={setTaskData}
+          dispatch={dispatch}
           selectedTask={selectedTask}
         />
       )}
       <section className="mb-20" id="tasks">
         <div className="container">
-          {/* Search Box Ends */}
           <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
-            {/* Tasker Header Component */}
             <TaskerHeader
               setAddTaskModal={setAddTaskModal}
               onDeleteAllTask={handleDeleteAllTasks}
               onSearch={(terms) => setSearchQuery(terms)}
             />
-            {/* Conditional rendering based on taskData length */}
             {filteredTasks.length <= 0 ? (
-              // Displayed when no tasks are found
               <p className="text-center text-3xl">Task List is empty!</p>
             ) : (
-              // Displayed when there are tasks
               <div className="overflow-auto">
-                {/* Tasks Table */}
                 <table className="table-fixed overflow-auto xl:w-full">
                   <thead>
                     <tr>
-                      {/* Table Header Columns */}
                       <th className="p-4 pb-8 text-sm font-semibold capitalize w-[48px]" />
                       <th className="p-4 pb-8 text-sm font-semibold capitalize w-[300px]">
                         {" "}
@@ -152,7 +111,6 @@ const MainTasksLayout = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {/* Render each task as a TableRow component */}
                     {filteredTasks.map((task) => (
                       <TableRow
                         key={task.id}

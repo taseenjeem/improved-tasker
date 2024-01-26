@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const UpdateTaskModal = ({
-  setEditTaskModal,
-  selectedTask,
-  taskData,
-  setTaskData,
-}) => {
+const UpdateTaskModal = ({ setEditTaskModal, selectedTask, dispatch }) => {
   const [editedTask, setEditedTask] = useState(selectedTask);
 
   const handleInputChange = (e) => {
@@ -17,7 +12,6 @@ const UpdateTaskModal = ({
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    // Extract values from form inputs
     const title = e.target.title.value;
     const task_description = e.target.task_description.value;
     const tags = e.target.tags.value;
@@ -29,38 +23,26 @@ const UpdateTaskModal = ({
       tags.length <= 0 ||
       priority.length <= 0
     ) {
-      toast.error("Ops! You can't left any field empty.", {
+      toast.error("Ops! You can't leave any field empty.", {
         position: "top-center",
       });
     } else {
-      // Create a new task object
-      const editedNewTask = {
-        id: crypto.randomUUID(),
+      const editedTaskData = {
+        ...selectedTask,
         title,
         task_description,
         tags: tags.split(","),
         priority,
-        isFavorite: editedTask.isFavorite,
+        isFavorite: selectedTask.isFavorite,
       };
 
-      // Find the task in taskData based on its id
-      const foundTask = taskData.find((task) => task.id === editedTask.id);
+      dispatch({
+        type: "UPDATE_TASK_DATA",
+        payload: editedTaskData,
+      });
 
-      // Check if the task is found
-      if (foundTask) {
-        // Create a new array with the updated task
-        const updatedTaskData = taskData.map((task) =>
-          task.id === editedTask.id ? editedNewTask : task
-        );
+      toast.success("Task updated successfully", { position: "top-center" });
 
-        // Update the taskData state with the new array
-        setTaskData(updatedTaskData);
-
-        // Display a success toast
-        toast.success("Task updated successfully", { position: "top-center" });
-      }
-
-      // Close the modal
       setEditTaskModal(false);
     }
   };

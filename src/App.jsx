@@ -3,21 +3,21 @@ import Navbar from "./components/global/Navbar";
 import LandingPage from "./pages/LandingPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { initialTaskData } from "./data/task-data.js";
-import { useState } from "react";
-import { TaskDataContext } from "./context/all-context.js";
+import { useReducer } from "react";
+import { TaskReducerContext } from "./context/all-context.js";
+import { initialState, taskReducer } from "./reducers/TaskReducer.js";
 
 const App = () => {
-  const [taskData, setTaskData] = useState(initialTaskData);
+  const [state, dispatch] = useReducer(taskReducer, initialState);
 
   return (
     <>
       <main className="bg-[#191D26] font-[Inter] text-white">
-        <TaskDataContext.Provider value={{ taskData, setTaskData }}>
+        <TaskReducerContext.Provider value={{ state, dispatch }}>
           <Navbar />
           <LandingPage />
           <Footer />
-        </TaskDataContext.Provider>
+        </TaskReducerContext.Provider>
       </main>
       <ToastContainer />
     </>

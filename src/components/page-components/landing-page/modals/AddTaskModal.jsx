@@ -1,51 +1,41 @@
 import { toast } from "react-toastify";
 
-const AddTaskModal = ({ setAddTaskModal, taskData, setTaskData }) => {
-  // Handle task add form submission
+const AddTaskModal = ({ setAddTaskModal, dispatch }) => {
   const handleOnSubmit = (e) => {
-    // Prevent the default form submission behavior
     e.preventDefault();
 
-    // Extract values from form inputs
     const title = e.target.title.value;
     const task_description = e.target.task_description.value;
     const tags = e.target.tags.value;
     const priority = e.target.priority.value;
 
-    // Check if any of the required fields are empty
     if (
       title.length <= 0 ||
       task_description.length <= 0 ||
       tags.length <= 0 ||
       priority.length <= 0
     ) {
-      // Display a warning toast if any required field is empty
       toast.warning("Please fill up all inputs", { position: "top-center" });
     } else {
-      // Create a new task object
       const newTask = {
         id: crypto.randomUUID(),
         title,
         task_description,
-        tags: tags.split(","), // Split tags into an array
+        tags: tags.split(","),
         priority,
         isFavorite: false,
       };
 
-      // Update taskData state with the new task
-      setTaskData([...taskData, newTask]);
+      dispatch({
+        type: "ADD_NEW_TASK",
+        payload: newTask,
+      });
 
-      // Reset the form inputs
       e.target.reset();
-
-      // Close the modal
       setAddTaskModal(false);
-
-      // Display a success toast
       toast.success("New task added successfully!", { position: "top-center" });
     }
   };
-
   return (
     <>
       <div className="bg-[#2d323fd5] w-full h-full flex justify-center items-center fixed top-0 left-0 z-50 px-5">
