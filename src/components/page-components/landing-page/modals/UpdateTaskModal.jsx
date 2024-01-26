@@ -47,10 +47,10 @@ const UpdateTaskModal = ({
       setTaskData(updatedTaskData);
 
       // Display a success toast
-      toast.success("Task updated successfully");
+      toast.success("Task updated successfully", { position: "top-center" });
     } else {
       // Display an error toast if the task is not found
-      toast.error("Task not found");
+      toast.error("Task not found", { position: "top-center" });
     }
 
     // Close the modal
