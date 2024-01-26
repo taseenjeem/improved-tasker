@@ -17,6 +17,21 @@ const MainTasksLayout = () => {
     setEditTaskModal(true);
   };
 
+  const handleSetFavorite = (task) => {
+    const updatedTaskData = taskData.map((item) => {
+      if (item.id === task.id) {
+        return {
+          ...item,
+          isFavorite: !item.isFavorite,
+        };
+      } else {
+        return item;
+      }
+    });
+
+    setTaskData(updatedTaskData);
+  };
+
   const handleDeleteTask = (task) => {
     // Display a confirmation dialog
     const confirmDelete = window.confirm(
@@ -111,6 +126,7 @@ const MainTasksLayout = () => {
                         key={task.id}
                         taskDetails={task}
                         onEditTask={handleEditTask}
+                        onSetFavorite={handleSetFavorite}
                         onDeleteTask={handleDeleteTask}
                       />
                     ))}
