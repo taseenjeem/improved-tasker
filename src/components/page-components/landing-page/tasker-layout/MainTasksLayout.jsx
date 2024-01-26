@@ -44,7 +44,9 @@ const MainTasksLayout = () => {
       setTaskData([]);
 
       // Display a success toast or handle accordingly
-      toast.success("All tasks deleted successfully");
+      toast.success("All tasks deleted successfully", {
+        position: "top-center",
+      });
     }
   };
 
