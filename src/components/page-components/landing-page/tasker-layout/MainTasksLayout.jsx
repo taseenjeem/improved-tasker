@@ -7,17 +7,22 @@ import UpdateTaskModal from "../modals/UpdateTaskModal";
 import { toast } from "react-toastify";
 
 const MainTasksLayout = () => {
+  // Access the task state and dispatch function from the context
   const { state, dispatch } = useContext(TaskReducerContext);
+
+  // States to manage modals, selected task, and search query
   const [addTaskModal, setAddTaskModal] = useState(false);
   const [editTaskModal, setEditTaskModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Function to handle editing a task
   const handleEditTask = (task) => {
     setSelectedTask(task);
     setEditTaskModal(true);
   };
 
+  // Function to set a task as favorite
   const handleSetFavorite = (task) => {
     dispatch({
       type: "SET_FAVORITE",
@@ -25,6 +30,7 @@ const MainTasksLayout = () => {
     });
   };
 
+  // Function to handle deleting a task with confirmation
   const handleDeleteTask = (task) => {
     const isConfirmed = window.confirm(
       "Are you sure you want to delete this task?"
@@ -36,10 +42,12 @@ const MainTasksLayout = () => {
         payload: { id: task.id },
       });
 
+      // Display success toast after deleting the task
       toast.success("Task deleted successfully", { position: "top-center" });
     }
   };
 
+  // Function to handle deleting all tasks with confirmation
   const handleDeleteAllTasks = () => {
     const isConfirmed = window.confirm(
       "Are you sure you want to delete all tasks?"
@@ -50,21 +58,25 @@ const MainTasksLayout = () => {
         type: "DELETE_ALL_TASKS",
       });
 
+      // Display success toast after deleting all tasks
       toast.success("All tasks deleted successfully", {
         position: "top-center",
       });
     }
   };
 
+  // Filter tasks based on the search query
   const filteredTasks = state.taskData.filter((task) =>
     task.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     <>
+      {/* New task adding modal */}
       {addTaskModal && (
         <AddTaskModal setAddTaskModal={setAddTaskModal} dispatch={dispatch} />
       )}
+      {/* Modal of updating an existing task */}
       {editTaskModal && (
         <UpdateTaskModal
           setEditTaskModal={setEditTaskModal}
@@ -75,6 +87,7 @@ const MainTasksLayout = () => {
       <section className="mb-20" id="tasks">
         <div className="container">
           <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
+            {/* TaskerHeader component for task management */}
             <TaskerHeader
               setAddTaskModal={setAddTaskModal}
               onDeleteAllTask={handleDeleteAllTasks}
@@ -84,6 +97,7 @@ const MainTasksLayout = () => {
               <p className="text-center text-3xl">Task List is empty!</p>
             ) : (
               <div className="overflow-auto">
+                {/* Table for displaying tasks */}
                 <table className="table-fixed overflow-auto xl:w-full">
                   <thead>
                     <tr>
@@ -111,6 +125,7 @@ const MainTasksLayout = () => {
                     </tr>
                   </thead>
                   <tbody>
+                    {/* Render TableRow component for each task */}
                     {filteredTasks.map((task) => (
                       <TableRow
                         key={task.id}

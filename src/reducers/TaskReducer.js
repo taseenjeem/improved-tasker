@@ -1,3 +1,4 @@
+// Initial state for the task management application
 const initialState = {
   taskData: [
     {
@@ -12,18 +13,24 @@ const initialState = {
   ],
 };
 
+// Reducer function to manage state based on dispatched actions
 const taskReducer = (state, action) => {
   switch (action.type) {
+    // Action to add a new task to the taskData array
     case "ADD_NEW_TASK":
       return {
         taskData: [...state.taskData, action.payload],
       };
+
+    // Action to update task data based on the provided payload
     case "UPDATE_TASK_DATA":
       return {
         taskData: state.taskData.map((task) =>
           task.id === action.payload.id ? action.payload : task
         ),
       };
+
+    // Action to delete a task based on the provided payload
     case "DELETE_TASK":
       return {
         ...state,
@@ -31,6 +38,8 @@ const taskReducer = (state, action) => {
           (item) => item.id !== action.payload.id
         ),
       };
+
+    // Action to toggle the 'isFavorite' property of a task
     case "SET_FAVORITE":
       return {
         ...state,
@@ -45,14 +54,19 @@ const taskReducer = (state, action) => {
           }
         }),
       };
+
+    // Action to delete all tasks by resetting the taskData array
     case "DELETE_ALL_TASKS":
       return {
         ...state,
         taskData: [],
       };
+
+    // Default case to return the current state if no matching action is found
     default:
       return state;
   }
 };
 
+// Exporting the initial state and the taskReducer function
 export { initialState, taskReducer };

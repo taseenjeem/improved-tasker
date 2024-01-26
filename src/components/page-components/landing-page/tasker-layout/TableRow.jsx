@@ -1,4 +1,5 @@
 const TableRow = ({ taskDetails, onEditTask, onDeleteTask, onSetFavorite }) => {
+  // Function to generate a random color
   const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
     let color = "#";
@@ -10,9 +11,18 @@ const TableRow = ({ taskDetails, onEditTask, onDeleteTask, onSetFavorite }) => {
 
   return (
     <>
+      {/* Table row for displaying task details */}
       <tr className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2">
+        {/* Favorite button */}
         <td>
-          <button onClick={() => onSetFavorite(taskDetails)}>
+          <button
+            title={
+              taskDetails.isFavorite
+                ? "Remove from favorite"
+                : "Add to favorite"
+            }
+            onClick={() => onSetFavorite(taskDetails)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="icon icon-tabler icon-tabler-star"
@@ -30,14 +40,17 @@ const TableRow = ({ taskDetails, onEditTask, onDeleteTask, onSetFavorite }) => {
             </svg>
           </button>
         </td>
+        {/* Task title */}
         <td>{taskDetails.title}</td>
+        {/* Task description */}
         <td>
           <div>{taskDetails.task_description}</div>
         </td>
+        {/* Task tags */}
         <td>
           <ul className="flex justify-center gap-1.5 flex-wrap">
-            {taskDetails.tags.map((tag) => (
-              <li key={tag}>
+            {taskDetails.tags.map((tag, index) => (
+              <li key={index}>
                 <span
                   className={`inline-block h-5 whitespace-nowrap rounded-[45px] px-2.5 text-sm capitalize text-[#F4F5F6]`}
                   style={{ backgroundColor: getRandomColor() }}
@@ -48,7 +61,9 @@ const TableRow = ({ taskDetails, onEditTask, onDeleteTask, onSetFavorite }) => {
             ))}
           </ul>
         </td>
+        {/* Task priority */}
         <td className="text-center">{taskDetails.priority}</td>
+        {/* Task options: Delete and Edit buttons */}
         <td>
           <div className="flex items-center justify-center space-x-3">
             <button
