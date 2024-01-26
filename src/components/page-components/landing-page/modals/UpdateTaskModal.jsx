@@ -5,11 +5,18 @@ const UpdateTaskModal = ({ setEditTaskModal, selectedTask, dispatch }) => {
   // State to track the edited task data
   const [editedTask, setEditedTask] = useState(selectedTask);
 
+  // State to track whether there are changes in the form
+  const [isFormChanged, setIsFormChanged] = useState(false);
+
   // Function to handle input changes in the form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
     // Update the editedTask state with the changed input value
     setEditedTask((prevTask) => ({ ...prevTask, [name]: value }));
+
+    // Set the form changed state to true when input changes
+    setIsFormChanged(true);
   };
 
   // Function to handle form submission
@@ -55,8 +62,14 @@ const UpdateTaskModal = ({ setEditTaskModal, selectedTask, dispatch }) => {
 
       // Close the modal
       setEditTaskModal(false);
+
+      // Reset the form changed state to false after submission
+      setIsFormChanged(false);
     }
   };
+
+  // Disable the "Edit Task" button when there are no changes
+  const isEditButtonDisabled = !isFormChanged;
 
   return (
     <>
@@ -139,7 +152,10 @@ const UpdateTaskModal = ({ setEditTaskModal, selectedTask, dispatch }) => {
             {/* Submit button */}
             <button
               type="submit"
-              className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
+              className={`rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80 ${
+                isEditButtonDisabled && "cursor-not-allowed opacity-50"
+              }`}
+              disabled={isEditButtonDisabled}
             >
               Edit Task
             </button>

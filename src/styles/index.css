@@ -8,3 +8,7 @@
   box-sizing: border-box;
   font-family: "Inter", "Lato", "Sora";
 }
+
+.not-allowed {
+  cursor: not-allowed !important;
+}
