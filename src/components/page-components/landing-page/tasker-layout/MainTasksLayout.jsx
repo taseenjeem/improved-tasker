@@ -6,9 +6,9 @@ import AddTaskModal from "../modals/AddTaskModal";
 import UpdateTaskModal from "../modals/UpdateTaskModal";
 
 const MainTasksLayout = () => {
+  const { taskData, setTaskData } = useContext(TaskDataContext);
   const [addTaskModal, setAddTaskModal] = useState(false);
   const [editTaskModal, setEditTaskModal] = useState(false);
-  const { taskData, setTaskData } = useContext(TaskDataContext);
 
   return (
     <>
