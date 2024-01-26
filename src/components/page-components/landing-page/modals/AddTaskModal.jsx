@@ -16,7 +16,7 @@ const AddTaskModal = ({ setAddTaskModal, taskData, setTaskData }) => {
       id: crypto.randomUUID(),
       title,
       task_description,
-      tags: tags.split(","), // Split tags into an array
+      tags: tags.split(","),
       priority,
       isFavorite: false,
     };
